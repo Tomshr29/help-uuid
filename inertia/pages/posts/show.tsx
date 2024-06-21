@@ -7,11 +7,5 @@ export default function PostShowPage(
   // @ts-ignore
   const { post } = props;
 
-  return (
-    <article>
-      <header>
-        <h1 className="text-2xl font-medium">{post?.title}</h1>
-      </header>
-    </article>
-  );
+  return <div className="grid grid-cols-1 gap-10 p-10 md:grid-cols-2"></div>;
 }
