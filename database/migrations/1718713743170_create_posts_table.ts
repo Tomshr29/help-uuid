@@ -12,8 +12,14 @@ export default class extends BaseSchema {
 
       table.string("title");
 
-      table.timestamp("created_at");
-      table.timestamp("updated_at");
+      table.timestamp("created_at").notNullable();
+      table.timestamp("updated_at").nullable();
+
+      table
+        .uuid("user_id")
+        .references("id")
+        .inTable("users")
+        .onDelete("CASCADE");
     });
   }
 

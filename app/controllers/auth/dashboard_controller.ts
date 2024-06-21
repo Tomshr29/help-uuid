@@ -10,8 +10,11 @@ export default class DashboardController {
     }),
   );
 
-  async index({ inertia }: HttpContext) {
-    const posts = await Post.all();
+  async index({ auth, inertia }: HttpContext) {
+    const authUser = auth.user!;
+    const posts = await Post.query()
+      .where("user_id", authUser.id)
+      .orderBy("created_at", "desc");
     return inertia.render("dashboard/index", { posts });
   }
 }

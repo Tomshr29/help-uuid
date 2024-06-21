@@ -20,8 +20,6 @@ const PostsController = () => import("#controllers/posts_controller");
 
 router.get("/dashboard", [DashboardController, "index"]).as("dashboard.index");
 
-router.put("dashboard/update", [DashboardController, "execute"]);
-
 router
   .group(() => {
     router.get("login", [LoginController, "show"]).as("auth.login");

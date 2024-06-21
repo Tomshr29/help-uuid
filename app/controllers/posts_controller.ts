@@ -9,20 +9,33 @@ export default class AddresuemsController {
     }),
   );
 
-  async create({ request, response }: HttpContext) {
+  async create({ request, response, auth }: HttpContext) {
     const data = request.only(["title"]);
 
     await Post.create({
       ...data,
-      // userId: auth.user?.id,
+      userId: auth.user?.id,
     });
 
     return response.redirect().toPath("/dashboard");
   }
 
-  async show({ inertia }: HttpContext) {
-    const post = await Post.all();
+  async show({ auth, inertia, params, response }: HttpContext) {
+    const authUser = auth.user!;
+    const postId = params.id;
 
-    return inertia.render("dashboard/show", { post });
+    try {
+      const post = await Post.query()
+        .where("user_id", authUser.id)
+        .where("id", postId)
+        .firstOrFail();
+      if (!post) {
+        response.redirect().toPath("/dashboard");
+      }
+      return inertia.render("dashboard/show", { post });
+    } catch (error) {
+      console.error("Erreur lors de la récupération du post:", error);
+      response.redirect().toPath("/dashboard");
+    }
   }
 }
