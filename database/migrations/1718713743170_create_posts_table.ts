@@ -15,6 +15,13 @@ export default class extends BaseSchema {
       table.timestamp("created_at").notNullable();
       table.timestamp("updated_at").nullable();
 
+      table.string("first_name");
+      table.string("last_name");
+      table.string("job_title");
+      table.string("address");
+      table.string("email");
+      table.string("phone");
+
       table
         .uuid("user_id")
         .references("id")

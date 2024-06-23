@@ -21,4 +21,22 @@ export default class Post extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime;
+
+  @column()
+  declare firstName: string;
+
+  @column()
+  declare lastName: string;
+
+  @column()
+  declare jobTitle: string;
+
+  @column()
+  declare address: string;
+
+  @column()
+  declare email: string;
+
+  @column()
+  declare phone: string;
 }

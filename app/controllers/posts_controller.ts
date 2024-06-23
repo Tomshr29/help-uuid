@@ -9,6 +9,17 @@ export default class AddresuemsController {
     }),
   );
 
+  static updateValidator = vine.compile(
+    vine.object({
+      firstName: vine.string(),
+      lastName: vine.string(),
+      jobTitle: vine.string(),
+      address: vine.string(),
+      email: vine.string(),
+      phone: vine.string(),
+    }),
+  );
+
   async create({ request, response, auth }: HttpContext) {
     const data = request.only(["title"]);
 
@@ -37,5 +48,16 @@ export default class AddresuemsController {
       console.error("Erreur lors de la récupération du post:", error);
       response.redirect().toPath("/dashboard");
     }
+  }
+
+  public async update({ params, request, response }: HttpContext) {
+    const postId = params.id;
+    const post = await Post.findOrFail(postId);
+    const payload = await request.validateUsing(
+      AddresuemsController.updateValidator,
+    );
+    post.merge(payload);
+    await post.save();
+    return response.continue();
   }
 }

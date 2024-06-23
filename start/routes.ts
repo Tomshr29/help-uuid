@@ -42,3 +42,5 @@ router.get("posts/:id/edit", [PostsController, "show"]);
 router.get("/", async ({ inertia }) => {
   return inertia.render("home", { version: 5 });
 });
+
+router.put("updateResume/:id", [PostsController, "update"]);
